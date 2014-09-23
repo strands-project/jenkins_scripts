@@ -46,6 +46,7 @@ if __name__ == '__main__':
     # global catch
     except BuildException as ex:
         print(ex.msg)
+        raise
 
     except Exception as ex:
         print("devel script failed. Check out the console output above for details.")
