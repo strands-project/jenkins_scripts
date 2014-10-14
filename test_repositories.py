@@ -51,7 +51,7 @@ def test_repositories(ros_distro, repo_list, version_list, workspace, test_depen
         ros_apt = '/etc/apt/sources.list.d/ros-latest.list'
         if not os.path.exists(ros_apt):
             with open(ros_apt, 'w') as f:
-                f.write("deb http://repos.ros.org/repos/ros-shadow-fixed/ubuntu %s main" % os.environ['OS_PLATFORM'])
+                f.write("deb http://packages.ros.org/ros/ubuntu/ %s main" % os.environ['OS_PLATFORM'])
             call("curl http://packages.ros.org/ros.key -o %s/ros.key" % workspace)
             call("apt-key add %s/ros.key" % workspace)
         # Add ros sources to apt
