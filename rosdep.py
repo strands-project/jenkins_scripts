@@ -14,10 +14,9 @@ class RosDepResolver:
             print("Skip initializing and updating rosdep database")
         else:
             print("Initialize rosdep database")
-            #apt_get_install(['lsb-release', 'python-rosdep'], sudo=sudo)
+            apt_get_install(['lsb-release', 'python-rosdep'], sudo=sudo)
             try:
-                #call("rosdep init", self.env)
-                print 'hurga'
+                call("rosdep init", self.env)
             except:
                 print("Rosdep is already initialized")
             if additional_rosdeps:
