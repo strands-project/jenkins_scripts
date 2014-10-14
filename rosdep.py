@@ -24,6 +24,8 @@ class RosDepResolver:
                 print("Installing additional rosdeps")
                 for (k, v) in additional_rosdeps.items():
                     print("  Installing additional rosdeps %s into %s" % (v, k))
+                    dn = os.path.dirname(k)
+                    call("mkdir -p %s" % dn, self.env)
                     call(
                         "curl -o %s %s" % (
                             k,
