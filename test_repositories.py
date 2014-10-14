@@ -98,7 +98,12 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
 
     # Create rosdep object
     print("Create rosdep object")
-    rosdep_resolver = rosdep.RosDepResolver(ros_distro, sudo, no_chroot)
+    strands_rosdep = "https://raw.githubusercontent.com/strands-project/rosdistro/strands-devel/rosdep/sources.list.d/50-strands.list"
+    strands_rosdep_list_file = "/etc/ros/rosdep/sources.list.d/50-strands.list"
+
+    additional_rosdeps={strands_rosdep_list_file: strands_rosdep}
+
+    rosdep_resolver = rosdep.RosDepResolver(ros_distro, sudo, no_chroot, additional_rosdeps=additional_rosdeps)
 
     if repo_list:
         # download the repo_list from source

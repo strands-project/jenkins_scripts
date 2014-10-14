@@ -5,21 +5,31 @@ from common import apt_get_install, call, check_output
 
 
 class RosDepResolver:
-    def __init__(self, ros_distro, sudo=False, no_chroot=False):
+    def __init__(self, ros_distro, sudo=False, no_chroot=False, additional_rosdeps=None):
         self.r2a = {}
         self.a2r = {}
         self.env = os.environ
         self.env['ROS_DISTRO'] = ros_distro
-
         if no_chroot:
             print("Skip initializing and updating rosdep database")
         else:
-            print("Ininitalize rosdep database")
-            apt_get_install(['lsb-release', 'python-rosdep'], sudo=sudo)
+            print("Initialize rosdep database")
+            #apt_get_install(['lsb-release', 'python-rosdep'], sudo=sudo)
             try:
-                call("rosdep init", self.env)
+                #call("rosdep init", self.env)
+                print 'hurga'
             except:
                 print("Rosdep is already initialized")
+            if additional_rosdeps:
+                print("Installing additional rosdeps")
+                for (k, v) in additional_rosdeps.items():
+                    print("  Installing additional rosdeps %s into %s" % (v, k))
+                    call(
+                        "curl -o %s %s" % (
+                            k,
+                            v),
+                        self.env)
+
             call("rosdep update", self.env)
 
         print("Building dictionaries from a rosdep's db")
