@@ -54,12 +54,12 @@ def test_repositories(ros_distro, repo_list, version_list, workspace, test_depen
                 f.write("deb http://packages.ros.org/ros/ubuntu/ %s main" % os.environ['OS_PLATFORM'])
             call("curl http://packages.ros.org/ros.key -o %s/ros.key" % workspace)
             call("apt-key add %s/ros.key" % workspace)
-        # Add ros sources to apt
+        # Add strands sources to apt
         print("Add strands sources to apt")
         strands_apt = '/etc/apt/sources.list.d/strands-latest.list'
         if not os.path.exists(strands_apt):
             with open(strands_apt, 'w') as f:
-                f.write("deb http://lcas.lincoln.ac.uk/repos/building %s main" % os.environ['OS_PLATFORM'])
+                f.write("deb http://lcas.lincoln.ac.uk/repos/release %s main" % os.environ['OS_PLATFORM'])
             call("curl http://lcas.lincoln.ac.uk/repos/public.key -o %s/strands.key" % workspace)
             call("apt-key add %s/strands.key" % workspace)
         apt_get_update(sudo)
