@@ -179,6 +179,7 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
         # build repositories and tests
         print("Build repo list")
         call("make", ros_env)
+        call("make install", ros_env)
         call("make tests", ros_env)
 
         # get the repositories test and run dependencies
