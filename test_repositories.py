@@ -212,8 +212,6 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
         setup_file = os.path.join(repo_buildspace, 'install_isolated', 'setup.sh')
         # anything after this should build on this env
         ros_env = get_ros_env(setup_file)
-        # set env variable to hot fix https://github.com/strands-project/strands_ci/issues/13
-        ros_env['ROS_TEST_RESULTS_DIR'] = repos_test_results_dir
 
     # don't do depends-on on things not in release
     not_in_release = set(repo_list) - set(release.repositories.keys())
