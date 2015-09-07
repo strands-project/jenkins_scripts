@@ -154,6 +154,13 @@ def document_packages(manifest_packages, catkin_packages, build_order,
                             'docs_url': '../../../api/%s/html' % (package),
                             'package': '%s' % package}
 
+            # fetch generator specific output folders from rosdoc_lite
+            from rosdoc_lite import get_generator_output_folders
+            output_folders = get_generator_output_folders(package_path)
+            print('output_folders', output_folders)
+            for generator, output_folder in output_folders.items():
+                package_tags['%s_output_folder' % generator] = output_folder
+
             #If the package has a deb name, then we'll store the tags for it
             #alongside that name
             if ros_dep.has_ros(package):
@@ -530,17 +537,3 @@ Depends rosinstall:\n%s""" % (build_errors,
                           "message_generation_failure")
     else:
         copy_test_results(workspace, docspace)
-
-
-def main():
-    arguments = sys.argv[1:]
-    ros_distro = arguments[0]
-    stack = arguments[1]
-    workspace = 'workspace'
-    docspace = 'docspace'
-    homepage = 'http://docs.ros.org'
-
-    document_repo(workspace, docspace, ros_distro, stack, 'precise', 'amd64', homepage, None, None)
-
-if __name__ == '__main__':
-    main()
