@@ -173,6 +173,8 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
         print("Build catkin workspace")
         call("catkin_init_workspace %s" % repo_sourcespace, ros_env)
         repos_test_results_dir = os.path.join(test_results_dir, 'repos')
+        # set env variable to hot fix https://github.com/strands-project/strands_ci/issues/13
+        ros_env['ROS_TEST_RESULTS_DIR'] = repos_test_results_dir
         call("cmake %s -DCATKIN_TEST_RESULTS_DIR=%s" % (repo_sourcespace, repos_test_results_dir), ros_env)
         #ros_env_repo = get_ros_env(os.path.join(repo_buildspace, 'devel/setup.bash'))
 
@@ -190,6 +192,8 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
 
         # get environment after installing test and run dependencies
         ros_env = get_ros_env('/opt/ros/%s/setup.bash' % ros_distro)
+        # set env variable to hot fix https://github.com/strands-project/strands_ci/issues/13
+        ros_env['ROS_TEST_RESULTS_DIR'] = repos_test_results_dir
 
         # run tests
         print("Test repo list")
@@ -197,6 +201,8 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
 
         # anything after this should build on this env
         ros_env = get_ros_env(os.path.join(repo_buildspace, 'devel/setup.bash'))
+        # set env variable to hot fix https://github.com/strands-project/strands_ci/issues/13
+        ros_env['ROS_TEST_RESULTS_DIR'] = repos_test_results_dir
 
     else:
         print("Build workspace with non-catkin packages in isolation")
@@ -206,6 +212,8 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
         setup_file = os.path.join(repo_buildspace, 'install_isolated', 'setup.sh')
         # anything after this should build on this env
         ros_env = get_ros_env(setup_file)
+        # set env variable to hot fix https://github.com/strands-project/strands_ci/issues/13
+        ros_env['ROS_TEST_RESULTS_DIR'] = repos_test_results_dir
 
     # don't do depends-on on things not in release
     not_in_release = set(repo_list) - set(release.repositories.keys())
@@ -319,6 +327,8 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
     print("Create a new CMakeLists.txt file using catkin")
     call("catkin_init_workspace %s" % dependson_sourcespace, ros_env)
     depends_on_test_results_dir = os.path.join(test_results_dir, 'depends_on')
+    # set env variable to hot fix https://github.com/strands-project/strands_ci/issues/13
+    ros_env['ROS_TEST_RESULTS_DIR'] = depends_on_test_results_dir
     call("cmake %s -DCATKIN_TEST_RESULTS_DIR=%s" % (dependson_sourcespace, depends_on_test_results_dir), ros_env)
     #ros_env_depends_on = get_ros_env(os.path.join(dependson_buildspace, 'devel/setup.bash'))
 
@@ -419,6 +429,11 @@ def _test_repositories_fuerte(ros_distro, repo_list, version_list, workspace, te
     call("catkin_init_workspace %s" % repo_sourcespace, ros_env)
     test_results_dir = os.path.join(workspace, 'test_results')
     repos_test_results_dir = os.path.join(test_results_dir, 'repos')
+
+    # set env variable to hot fix https://github.com/strands-project/strands_ci/issues/13
+    ros_env['ROS_TEST_RESULTS_DIR'] = repos_test_results_dir
+
+
     os.makedirs(repo_buildspace)
     os.chdir(repo_buildspace)
     call("cmake %s -DCATKIN_TEST_RESULTS_DIR=%s" % (repo_sourcespace, repos_test_results_dir), ros_env)
@@ -506,6 +521,8 @@ def _test_repositories_fuerte(ros_distro, repo_list, version_list, workspace, te
     print("Create a new CMakeLists.txt file using catkin")
     call("catkin_init_workspace %s" % dependson_sourcespace, ros_env)
     depends_on_test_results_dir = os.path.join(test_results_dir, 'depends_on')
+
+
     call("cmake %s -DCATKIN_TEST_RESULTS_DIR=%s" % (dependson_sourcespace, depends_on_test_results_dir), ros_env)
     #ros_env_depends_on = get_ros_env(os.path.join(dependson_buildspace, 'devel/setup.bash'))
 
