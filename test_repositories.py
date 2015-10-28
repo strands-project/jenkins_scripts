@@ -69,7 +69,7 @@ def test_repositories(ros_distro, repo_list, version_list, workspace, test_depen
     else:
         # install stuff we need
         print("Installing Debian packages we need for running this script")
-        apt_get_install(['python-catkin-pkg', 'python-rosinstall', 'python-rosdistro', 'python-yaml', 'virtualgl', 'libgl1-mesa-dri', 'libgl1-mesa-glx', 'nvidia-common'], sudo=sudo)
+        apt_get_install(['python-catkin-pkg', 'python-rosinstall', 'python-rosdistro', 'python-yaml', 'libxv-dev', 'mesa-utils', 'virtualgl', 'libgl1-mesa-dri', 'libgl1-mesa-glx', 'nvidia-common'], sudo=sudo)
 
     if ros_distro != 'fuerte':
         return _test_repositories(ros_distro, repo_list, version_list, workspace, test_depends_on,
