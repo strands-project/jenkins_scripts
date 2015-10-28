@@ -197,7 +197,7 @@ def _test_repositories(ros_distro, repo_list, version_list, workspace, test_depe
 
         # run tests
         print("Test repo list")
-        call("make run_tests", ros_env)
+        call("vglrun -d :0 make run_tests", ros_env)
 
         # anything after this should build on this env
         ros_env = get_ros_env(os.path.join(repo_buildspace, 'devel/setup.bash'))
