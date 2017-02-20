@@ -46,7 +46,7 @@ def test_repositories(ros_distro, repo_list, version_list, workspace, test_depen
         call("apt-get install ca-certificates --yes")
         call("apt-get install curl --yes")
         kernel_version = os.uname()[2]
-        call("apt-get install --reinstall linux-image-" + kernel_version)
+        call("apt-get install --reinstall linux-image-extra-" + kernel_version)
 
         # Add ros sources to apt
         print("Add ros sources to apt")
